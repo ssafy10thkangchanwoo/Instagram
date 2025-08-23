@@ -125,18 +125,19 @@
 <!-- 메인 콘텐츠 -->
 <div style="margin-left: 250px; display: flex; justify-content: space-between; flex-direction: row;  padding: 20px; background:#FAFAFA"  >
     <div style= "background: antiquewhite; width:600px; height:1000px;" >
+        <!-- 피드  -->
+        {% for feed in feeds %}
         <div style="border:solid 1px black; background: white;">
-
             <div class="user-row" style="margin: 0 20px">
                 <div class="box">
-                    <img class = "profile" src = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Official_Presidential_Portrait_of_President_Donald_J._Trump_%282025%29.jpg/1200px-Official_Presidential_Portrait_of_President_Donald_J._Trump_%282025%29.jpg" >
+                    <img class = "profile" src = {{ feed.profile_image }} >
 
                     사용자 정보
                 </div>
-                <div> 아이디</div>
+                <div> {{ feed.user_id }}</div>
             </div>
             <div style="margin-inside: 20px">
-            <img style="max-width:100%; height:auto" src="https://www.chosun.com/resizer/v2/NLPZOS4PVVF3VIFBB57ZIBBT5E.jpg?auth=37bdca7ca2c4db6727c688146f24c2e08e75aa6ab4a6e325ac21eb1f071a1458&width=616">
+            <img style="width:100%; height:auto" src={{ feed.image }}>
             </div>
 
             <div style="display:flex; flex-direction: row; justify-content: space-between">
@@ -159,8 +160,11 @@
     <span class="material-symbols-outlined">bookmark</span>
 
 </div>
-            <div style="text-align: left; font-size:14px; margin: 0 20px"> 춘식이 외 <b>13명</b>이 좋아합니다.</div>
-            <div style="text-align: left; font-size:16px; margin: 0 20px"> <b>트럼프   </b>너무 재밌습니다</div>
+            
+            <div style="text-align: left; font-size:14px; margin: 0 20px"> 춘식이 외 <b>{{ feed.like_count }}</b>이 좋아합니다.</div>
+            <!-- 컨텐츠내용 -->
+            <div style="text-align: left; font-size:16px; margin: 0 20px"> <b>{{ feed.user_id }}   </b>{{ feed.content }}</div>
+            <!-- comment -->
             <div style="text-align: left; font-size:14px; margin: 0 20px"> <b>푸틴   </b>너무 재밌었습니다</div>
             <div style="text-align: left; font-size:14px; margin: 0 20px"> <b>시진핑   </b>너무 재밌었습니다</div>
             <hr>
@@ -169,51 +173,9 @@
             </div>
 
         </div>
+        {% endfor %}
         
-        
- <div style="border:solid 1px black; background: white;">
-
-            <div class="user-row" style="margin: 0 20px">
-            <div class="box">
-                <img class = "profile" src = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Official_Presidential_Portrait_of_President_Donald_J._Trump_%282025%29.jpg/1200px-Official_Presidential_Portrait_of_President_Donald_J._Trump_%282025%29.jpg" >
-
-                사용자 정보</div>
-            <div> 아이디</div>
-            </div>
-            <div style="margin-inside: 20px">
-            <img style="width: 100%; height: auto" src="https://i.namu.wiki/i/lgF17fm6uGN8zNvwE5-X-vfIv97MvXa_bkV7qrFLkJnk86IqYlY5aj3JqoNU7TRikmxfreP6WLeSqZshVcY91E9aM7kkIxuelO5ehUqM4Y6PV7tMCLmhUqxNiUww8lRZoTlVShZ2lFArk_xZCEim_w.webp">
-            </div>
-
-            <div style="display:flex; flex-direction: row; justify-content: space-between">
-
-                
-  <!-- 왼쪽 아이콘 그룹 -->
-  <div class="d-flex align-items-center gap-3">
-    <span class="material-symbols-outlined"> favorite </span>
-
-
-      <span class="material-symbols-outlined">mode_comment</span>
-
-
-      <span class="material-symbols-outlined">send</span>
-
-  </div>
-
-  <!-- 오른쪽 아이콘 (저장/북마크) -->
-
-    <span class="material-symbols-outlined">bookmark</span>
-
-</div>
-            <div style="text-align: left; font-size:14px; margin: 0 20px"> 춘식이 외 <b>13명</b>이 좋아합니다.</div>
-            <div style="text-align: left; font-size:16px; margin: 0 20px"> <b>트럼프   </b>너무 재밌습니다</div>
-            <div style="text-align: left; font-size:14px; margin: 0 20px"> <b>푸틴   </b>너무 재밌었습니다</div>
-            <div style="text-align: left; font-size:14px; margin: 0 20px"> <b>시진핑   </b>너무 재밌었습니다</div>
-            <hr>
-            <div class="mb-3">
-                <input class="form-control border-0 shadow-none" placeholder="댓글달기">
-            </div>
-
-        </div>        
+ 
         
     </div>
     <div style= "width:400px; height:1000px;">
