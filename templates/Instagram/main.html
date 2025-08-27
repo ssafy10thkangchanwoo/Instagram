@@ -60,7 +60,8 @@
     }
 
     .image_upload_space{
-        background: orange;
+
+
         width: 780px;
         height: 550px;
     }
@@ -74,9 +75,10 @@
 
   </head>
   <body>
-    <div id = "modal_add_feed" class="modal_overlay">
-        <div class="modal_window">
-            <div style="display: flex; justify-content: space-between" >
+  <!-- 이미지 업로드용 모달 -->
+    <div id = "first_modal" class="modal_overlay">
+        <div class="modal_window ">
+            <div style="display: flex; justify-content: space-between; border-bottom: solid 1px gray" >
                 <div>
 
                 </div>
@@ -88,8 +90,38 @@
                 </div>
             </div>
             <div class="image_upload_space">
-
             </div>
+        </div>
+    </div>
+
+  <!-- 글 입력 모달 -->
+      <div id = "second_modal" class="modal_overlay">
+        <div class="modal_window">
+            <div style="display: flex; justify-content: space-between; border-bottom: solid 1px gray" >
+                <div>
+                </div>
+                <div>
+                    <p style="text-align: center">새 이미지</p>
+                </div>
+                <div>
+                    <span class="material-symbols-outlined">close</span>
+                </div>
+            </div>
+
+                <div style="display: flex; justify-content: space-between">
+                    <div class="image_upload_space" style="width: 500px"></div>
+
+                    <div style="text-align: center; width: 300px; border-left: solid 1px gray;">
+                        <div>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                      style="width: 300px; height: 500px; margin-bottom: 10px"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-primary" style="width: 100%">
+                            공유하기
+                        </button>
+                    </div>
+
+                </div>
 
         </div>
     </div>
@@ -217,7 +249,7 @@
             <!-- comment -->
             <div style="text-align: left; font-size:14px; margin: 0 20px"> <b>푸틴   </b>너무 재밌었습니다</div>
             <div style="text-align: left; font-size:14px; margin: 0 20px"> <b>시진핑   </b>너무 재밌었습니다</div>
-            <hr>
+
             <div class="mb-3">
                 <input class="form-control border-0 shadow-none" placeholder="댓글달기">
             </div>
@@ -305,9 +337,11 @@ Meta Verified
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+
+
   <script>
       $('#nav_bar_add_box').click(function() {
-          $('.modal_overlay').css({
+          $('#first_modal').css({
               display:'flex'
           });
 
@@ -320,6 +354,7 @@ Meta Verified
               display:"none"
           })
           alert('style눌림')
+
       })
       $('.image_upload_space')
           .on("dragover", dragOver)
@@ -346,6 +381,37 @@ Meta Verified
       function uploadFiles(e){
           e.stopPropagation();
           e.preventDefault();
+          console.log(e);
+          e.dataTransfer = e.originalEvent.dataTransfer; //2
+          var files = e.target.files || e.dataTransfer.files;
+          console.log(files);
+          if (files.length > 1) {
+              alert('하나만 올려라.');
+              return;
+          }
+
+
+          if (files[0].type.match(/image.*/)) {
+              $('#first_modal').css({
+                  display:'none'
+             });
+              $('#second_modal').css({
+                  display:'flex'
+                  })
+              $('.image_upload_space').css({
+                  "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
+                  "outline": "none",
+                  "background-size": "100%",
+                  "background-position": "center",
+                  "background-repeat":"no-repeat"
+              })
+
+
+}else{
+  alert('이미지가 아닙니다.');
+  return;
+}
+
       }
 
 
