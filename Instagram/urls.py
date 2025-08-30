@@ -17,10 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from Instagram.views import Sub
-from content.views import Main
+from content.views import Main, UploadFile
 
+# media code during developing
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('main/',Main.as_view())
+    path('main/',Main.as_view()),
+    path('content/upload', UploadFile.as_view())
 
 ]
+# media code during developing
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+      {% load static %}
+
     <title>Bootstrap demo</title>
       <style>
         .user-row {
@@ -113,10 +115,10 @@
 
                     <div style="text-align: center; width: 300px; border-left: solid 1px gray;">
                         <div>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                            <textarea id = "input_feed_content" class="form-control" rows="3"
                                       style="width: 300px; height: 500px; margin-bottom: 10px"></textarea>
                         </div>
-                        <button type="button" class="btn btn-primary" style="width: 100%">
+                        <button id="feed_create_button" type="button" class="btn btn-primary" style="width: 100%">
                             공유하기
                         </button>
                     </div>
@@ -219,7 +221,7 @@
                 <div> {{ feed.user_id }}</div>
             </div>
             <div style="margin-inside: 20px">
-            <img style="width:100%; height:auto" src={{ feed.image }}>
+            <img style="width:100%; height:auto" src={% get_media_prefix %}{{ feed.image }}>
             </div>
 
             <div style="display:flex; flex-direction: row; justify-content: space-between">
@@ -242,7 +244,6 @@
     <span class="material-symbols-outlined">bookmark</span>
 
 </div>
-            
             <div style="text-align: left; font-size:14px; margin: 0 20px"> 춘식이 외 <b>{{ feed.like_count }}</b>이 좋아합니다.</div>
             <!-- 컨텐츠내용 -->
             <div style="text-align: left; font-size:16px; margin: 0 20px"> <b>{{ feed.user_id }}   </b>{{ feed.content }}</div>
@@ -333,13 +334,54 @@ Meta Verified
     </div>
 
 </div>
-
+    
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 
 
   <script>
+      let files;
+      
+      $('#feed_create_button').click(function() {
+
+
+          let file = files[0]
+          let image = files[0].name;
+          let content = $('#input_feed_content').val();
+          let user_id = 'ID'
+          let profile_image = 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Official_Presidential_Portrait_of_President_Donald_J._Trump_%282025%29.jpg/1200px-Official_Presidential_Portrait_of_President_Donald_J._Trump_%282025%29.jpg'
+
+          let fd = new FormData();
+
+          fd.append('file', file);
+          fd.append('image', image);
+          fd.append('content', content);
+          fd.append('user_id', user_id);
+          fd.append('profile_image',profile_image);
+          
+          $.ajax({
+              url: "/content/upload",
+              data: fd,
+              method: "POST",
+              processData: false,
+              contentType: false,
+
+              success: function(data) {
+                  console.log('성공');
+              },
+
+              error: function(request, status, error) {
+                  console.log('에러');
+              },
+
+              complete: function() {
+                  console.log("완료");
+                  location.replace("/main")
+              }
+          })
+      })
+
       $('#nav_bar_add_box').click(function() {
           $('#first_modal').css({
               display:'flex'
@@ -356,6 +398,7 @@ Meta Verified
           alert('style눌림')
 
       })
+
       $('.image_upload_space')
           .on("dragover", dragOver)
           .on("dragleave", dragOver)
@@ -378,12 +421,13 @@ Meta Verified
           }
       }
 
+
       function uploadFiles(e){
           e.stopPropagation();
           e.preventDefault();
           console.log(e);
           e.dataTransfer = e.originalEvent.dataTransfer; //2
-          var files = e.target.files || e.dataTransfer.files;
+          files = e.target.files || e.dataTransfer.files;
           console.log(files);
           if (files.length > 1) {
               alert('하나만 올려라.');
@@ -413,6 +457,7 @@ Meta Verified
 }
 
       }
+      
 
 
   </script>
