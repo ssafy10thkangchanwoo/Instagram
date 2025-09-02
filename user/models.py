@@ -6,8 +6,8 @@ class User(AbstractBaseUser):
     profile_image = models.TextField()
     nickname = models.CharField(max_length=24)
     name = models.CharField(max_length=24)
-    email = models.EmailField()
-    # USERNAME_FIELD = 'email'
+    email = models.EmailField(unique=True)
+    USERNAME_FIELD = 'email'
 
     class Meta:
         db_table = 'User'
