@@ -32,17 +32,17 @@ class Login(APIView):
         return render(request, "user/login.html")
 
     def post(self, request):
+        # print('LOGIN_VIEW_HIT', request.path, request.method, request.data)
+
         email = request.data.get("email", None)
         password = request.data.get("password", None)
         user = User.objects.filter(email=email).first()
-        user_pw = user.password
+
         if user is None:
             return Response(status=404, data=dict(message="User not found"))
 
-
+        print(password)
         if user.check_password(password):
             return Response(status=200)
         else:
             return Response(status=404)
-
-            return Response(status=200)

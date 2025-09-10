@@ -26,7 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Main.as_view(), name='home'),
     path('',include('content.urls')),
-    path('user/', include('user.urls'))
+    path('user/', include('user.urls', namespace='user')),
 
 ]
 # media code during developing
